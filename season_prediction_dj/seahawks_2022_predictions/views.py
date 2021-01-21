@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect, HttpResponse
 from .forms import prediction_form
 from .hawksscore import get_df_panda
 from .models import prediction_table
+from django_pandas.io import read_frame
 
 # Create your views here.
 
@@ -25,4 +26,6 @@ def hawks_scores_view(request):
     return HttpResponse(get_df_panda().to_html())
 
 def submitted_predictions(request):
-    return HttpResponse(prediction_table.to_html())
+    qs = prediction_table.objects.all()
+    df = read_frame(qs)
+    return HttpResponse(df.to_html())
