@@ -1,6 +1,8 @@
-<h3> SEAHAWKS 2020 PREDICTION FORM</h3>
+{% extends "seahawks_2022_predictions/base.html" %}
 
+{% block title %}SEAHAWKS 2020 PREDICTION FORM{% endblock %}
 
+{% block content %}
 <form action=""" method="post" >
     {% csrf_token %}
     <table class="table" border="3">
@@ -104,3 +106,4 @@
     <input type="submit">
 </form>
 
+{% endblock %}
