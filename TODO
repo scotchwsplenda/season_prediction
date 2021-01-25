@@ -1,5 +1,5 @@
 make html form pretty
-relate predictions to score in sql
-present sql table with to_html
+relate predictions to score in sql -> prediction_accuracy.py
+present sql table with to_html -> better to do it in views / templates for linking
 figure out logins and use system provided user name or change predictions to open text user name
 make base html with menu
