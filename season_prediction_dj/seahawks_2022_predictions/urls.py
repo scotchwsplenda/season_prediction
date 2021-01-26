@@ -5,6 +5,7 @@ from .views import  hawks_predictions_view, hawks_scores_view, submitted_predict
 urlpatterns = [
     path('form/', hawks_predictions_view, name="whatisthis"),
     path('', hawks_scores_view),
+    path('scores/', hawks_scores_view),
     path('predictions/', submitted_predictions),
     path('predicted_difs/', submitted_predictions_dif)
 
