@@ -32,25 +32,20 @@ def df_accurate_wl(funky):
     df_accurate_wl = pd.DataFrame()
     df_accurate_wl['Name'] = df_predictions['name']
     df_accurate_wl['WEEK1'] = np.where(
-        (
-            (df_predictions['Predicted_Wk1_Score_Dif']>0) & (funky['Differenchy'][0]>0)
-          | (df_predictions['Predicted_Wk1_Score_Dif']<0) & (funky['Differenchy'][0]<0)), 
-            (df_predictions['Predicted_Wk1_Score_Dif']      -funky['Differenchy'][0]).abs(),-1)
+        ((df_predictions['Predicted_Wk1_Score_Dif'] * funky['Differenchy'][0]) > 0), # correctly predicted W/L 
+         (df_predictions['Predicted_Wk1_Score_Dif'] - funky['Differenchy'][0]).abs(),-1) # dif between actual and predicted, (if W/L wrong -1)
     df_accurate_wl['WEEK2'] = np.where(
-        (
-            (df_predictions['Predicted_Wk2_Score_Dif']>0) & (funky['Differenchy'][1]>0)
-          | (df_predictions['Predicted_Wk2_Score_Dif']<0) & (funky['Differenchy'][1]<0)), 
-            (df_predictions['Predicted_Wk2_Score_Dif']      -funky['Differenchy'][1]).abs(),-1)  
+        ((df_predictions['Predicted_Wk2_Score_Dif'] * funky['Differenchy'][1]) > 0), 
+         (df_predictions['Predicted_Wk2_Score_Dif'] - funky['Differenchy'][1]).abs(),-1) 
     df_accurate_wl['WEEK3'] = np.where(
-        (
-            (df_predictions['Predicted_Wk3_Score_Dif']>0) & (funky['Differenchy'][2]>0)
-          | (df_predictions['Predicted_Wk3_Score_Dif']<0) & (funky['Differenchy'][2]<0)), 
-            (df_predictions['Predicted_Wk3_Score_Dif']      -funky['Differenchy'][2]).abs(),-1)
+        ((df_predictions['Predicted_Wk3_Score_Dif'] * funky['Differenchy'][2]) > 0), 
+         (df_predictions['Predicted_Wk3_Score_Dif'] - funky['Differenchy'][2]).abs(),-1) 
     df_accurate_wl['WEEK4'] = np.where(
-        (
-            (df_predictions['Predicted_Wk4_Score_Dif']>0) & (funky['Differenchy'][3]>0)
-          | (df_predictions['Predicted_Wk4_Score_Dif']<0) & (funky['Differenchy'][3]<0)), 
-            (df_predictions['Predicted_Wk4_Score_Dif']      -funky['Differenchy'][3]).abs(),-1)
+        ((df_predictions['Predicted_Wk4_Score_Dif'] * funky['Differenchy'][3]) > 0), 
+         (df_predictions['Predicted_Wk4_Score_Dif'] - funky['Differenchy'][3]).abs(),-1) 
+    df_accurate_wl['WEEK5'] = np.where(
+        ((df_predictions['Predicted_Wk5_Score_Dif'] * funky['Differenchy'][4]) > 0), 
+         (df_predictions['Predicted_Wk5_Score_Dif'] - funky['Differenchy'][4]).abs(),-1) 
     return df_accurate_wl , df_predictions
 
 def df_predictions_accuracy(df_accurate_wl):

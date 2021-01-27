@@ -1,0 +1,13 @@
+{% extends "seahawks_2022_predictions/base.html" %}
+
+{% block title %}SEAHAWKS 2020 ACCURACY{% endblock %}
+
+{% block content %}
+    {% csrf_token %}
+    {{df_accurate_wl|safe}}
+
+    <head>
+    SOME WEIRD STUFF
+    </head>
+    {{df_predictions|safe}}
+{% endblock %}
