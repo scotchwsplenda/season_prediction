@@ -1,0 +1,13 @@
+{% extends "seahawks_2022_predictions/base.html" %}
+
+{% block title %}SEAHAWKS 2020 Home Piznage{% endblock %}
+
+{% block content %}
+    {% csrf_token %}
+
+    <head>
+    How are those Hawks doing?
+    </head>
+    {{get_df_panda|safe}}
+
+{% endblock %}

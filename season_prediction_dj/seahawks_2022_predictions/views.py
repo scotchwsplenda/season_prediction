@@ -1,14 +1,13 @@
-from django.shortcuts import render, redirect, HttpResponse
+from django.shortcuts import render, redirect
 from .forms import prediction_form
 from .hawksscore import get_df_panda
-from .models import prediction_table
-from django_pandas.io import read_frame
+
 import pandas as pd
 import sqlite3
 import numpy as np
 # Create your views here.
 
-def hawks_predictions_view(request):
+def hawks_predictions_form(request):
     form = prediction_form()
 
     season2 = get_df_panda()
@@ -24,12 +23,7 @@ def hawks_predictions_view(request):
     return render(request, "seahawks_2022_predictions/form.html", {'form': form, 'season': season2})
 
 def hawks_scores_view(request):
-    return HttpResponse(get_df_panda().to_html())
-
-def submitted_predictions(request):
-    qs = prediction_table.objects.all()
-    df = read_frame(qs)
-    return HttpResponse(df.to_html())
+    return render(request, "seahawks_2022_predictions/home.html", {'get_df_panda': get_df_panda().to_html()})
 
 
 # https://stackoverflow.com/questions/39109045/numpy-where-with-multiple-conditions -> answer #2
