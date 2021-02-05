@@ -3,107 +3,112 @@
 {% block title %}SEAHAWKS 2020 PREDICTION FORM{% endblock %}
 
 {% block content %}
-<form action=""" method="post" >
-    {% csrf_token %}
-    <table class="table" border="3">
-    
-        <tr>
-            <th> Week </th>
-            <th> HawkScore </th>
-            <th> OppScore </th>
-        </tr>
-        <tr>
-            <td> {{season.Title.1}}</td>
-            <td> {{form.Predicted_HawkScore_Wk1}} </td>
-            <td> {{form.Predicted_OppScore_Wk1}}</td>
-        </tr>
-        <tr>
-            <td> {{season.Title.2}}</td>
-            <td> {{form.Predicted_HawkScore_Wk2}} </td>
-            <td> {{form.Predicted_OppScore_Wk2}}</td>
-        </tr>
-        <tr>
-            <td> {{season.Title.3}}</td>
-            <td> {{form.Predicted_HawkScore_Wk3}} </td>
-            <td> {{form.Predicted_OppScore_Wk3}}</td>
-        </tr>
-        <tr>
-            <td> {{season.Title.4}}</td>
-            <td> {{form.Predicted_HawkScore_Wk4}} </td>
-            <td> {{form.Predicted_OppScore_Wk4}}</td>
-        </tr>
-        <tr>
-            <td> {{season.Title.5}}</td>
-            <td> {{form.Predicted_HawkScore_Wk5}} </td>
-            <td> {{form.Predicted_OppScore_Wk5}}</td>
-        </tr>
-        <tr>
-            <td> {{season.Title.6}}</td>
-            <td> {{form.Predicted_HawkScore_Wk6}} </td>
-            <td> {{form.Predicted_OppScore_Wk6}}</td>
-        </tr>
-        <tr>
-            <td> {{season.Title.7}}</td>
-            <td> {{form.Predicted_HawkScore_Wk7}} </td>
-            <td> {{form.Predicted_OppScore_Wk7}}</td>
-        </tr>
-        <tr>
-            <td> {{season.Title.8}}</td>
-            <td> {{form.Predicted_HawkScore_Wk8}} </td>
-            <td> {{form.Predicted_OppScore_Wk8}}</td>
-        </tr>
-        <tr>
-            <td> {{season.Title.9}}</td>
-            <td> {{form.Predicted_HawkScore_Wk9}} </td>
-            <td> {{form.Predicted_OppScore_Wk9}}</td>
-        </tr>
-        <tr>
-            <td> {{season.Title.10}}</td>
-            <td> {{form.Predicted_HawkScore_Wk10}} </td>
-            <td> {{form.Predicted_OppScore_Wk10}}</td>
-        </tr>
-        <tr>
-            <td> {{season.Title.11}}</td>
-            <td> {{form.Predicted_HawkScore_Wk11}} </td>
-            <td> {{form.Predicted_OppScore_Wk11}}</td>
-        </tr>
-        <tr>
-            <td> {{season.Title.12}}</td>
-            <td> {{form.Predicted_HawkScore_Wk12}} </td>
-            <td> {{form.Predicted_OppScore_Wk12}}</td>
-        </tr>
-        <tr>
-            <td> {{season.Title.13}}</td>
-            <td> {{form.Predicted_HawkScore_Wk13}} </td>
-            <td> {{form.Predicted_OppScore_Wk13}}</td>
-        </tr>
-        <tr>
-            <td> {{season.Title.14}}</td>
-            <td> {{form.Predicted_HawkScore_Wk14}} </td>
-            <td> {{form.Predicted_OppScore_Wk14}}</td>
-        </tr>
-        <tr>
-            <td> {{season.Title.15}}</td>
-            <td> {{form.Predicted_HawkScore_Wk15}} </td>
-            <td> {{form.Predicted_OppScore_Wk15}}</td>
-        </tr>
-        <tr>
-            <td> {{season.Title.16}}</td>
-            <td> {{form.Predicted_HawkScore_Wk16}} </td>
-            <td> {{form.Predicted_OppScore_Wk16}}</td>
-        </tr>
-        <tr>
-            <td> {{season.Title.17}}</td>
-            <td> {{form.Predicted_HawkScore_Wk17}} </td>
-            <td> {{form.Predicted_OppScore_Wk17}}</td>
-        </tr>
-        <tr>
-            <td>Enter</td>
-            <td> Name </td>
-            <td> {{form.name}}</td>
-        </tr>
-    </table>
-    <input type="submit">
-</form>
-
+{% if user.is_authenticated %}
+  Hi {{ user.username }}!
+    <form action=""" method="post" >
+        {% csrf_token %}
+        <table class="table" border="3">
+        
+            <tr>
+                <th> Week </th>
+                <th> HawkScore </th>
+                <th> OppScore </th>
+            </tr>
+            <tr>
+                <td> {{season.Title.1}}</td>
+                <td> {{form.Predicted_HawkScore_Wk1}} </td>
+                <td> {{form.Predicted_OppScore_Wk1}}</td>
+            </tr>
+            <tr>
+                <td> {{season.Title.2}}</td>
+                <td> {{form.Predicted_HawkScore_Wk2}} </td>
+                <td> {{form.Predicted_OppScore_Wk2}}</td>
+            </tr>
+            <tr>
+                <td> {{season.Title.3}}</td>
+                <td> {{form.Predicted_HawkScore_Wk3}} </td>
+                <td> {{form.Predicted_OppScore_Wk3}}</td>
+            </tr>
+            <tr>
+                <td> {{season.Title.4}}</td>
+                <td> {{form.Predicted_HawkScore_Wk4}} </td>
+                <td> {{form.Predicted_OppScore_Wk4}}</td>
+            </tr>
+            <tr>
+                <td> {{season.Title.5}}</td>
+                <td> {{form.Predicted_HawkScore_Wk5}} </td>
+                <td> {{form.Predicted_OppScore_Wk5}}</td>
+            </tr>
+            <tr>
+                <td> {{season.Title.6}}</td>
+                <td> {{form.Predicted_HawkScore_Wk6}} </td>
+                <td> {{form.Predicted_OppScore_Wk6}}</td>
+            </tr>
+            <tr>
+                <td> {{season.Title.7}}</td>
+                <td> {{form.Predicted_HawkScore_Wk7}} </td>
+                <td> {{form.Predicted_OppScore_Wk7}}</td>
+            </tr>
+            <tr>
+                <td> {{season.Title.8}}</td>
+                <td> {{form.Predicted_HawkScore_Wk8}} </td>
+                <td> {{form.Predicted_OppScore_Wk8}}</td>
+            </tr>
+            <tr>
+                <td> {{season.Title.9}}</td>
+                <td> {{form.Predicted_HawkScore_Wk9}} </td>
+                <td> {{form.Predicted_OppScore_Wk9}}</td>
+            </tr>
+            <tr>
+                <td> {{season.Title.10}}</td>
+                <td> {{form.Predicted_HawkScore_Wk10}} </td>
+                <td> {{form.Predicted_OppScore_Wk10}}</td>
+            </tr>
+            <tr>
+                <td> {{season.Title.11}}</td>
+                <td> {{form.Predicted_HawkScore_Wk11}} </td>
+                <td> {{form.Predicted_OppScore_Wk11}}</td>
+            </tr>
+            <tr>
+                <td> {{season.Title.12}}</td>
+                <td> {{form.Predicted_HawkScore_Wk12}} </td>
+                <td> {{form.Predicted_OppScore_Wk12}}</td>
+            </tr>
+            <tr>
+                <td> {{season.Title.13}}</td>
+                <td> {{form.Predicted_HawkScore_Wk13}} </td>
+                <td> {{form.Predicted_OppScore_Wk13}}</td>
+            </tr>
+            <tr>
+                <td> {{season.Title.14}}</td>
+                <td> {{form.Predicted_HawkScore_Wk14}} </td>
+                <td> {{form.Predicted_OppScore_Wk14}}</td>
+            </tr>
+            <tr>
+                <td> {{season.Title.15}}</td>
+                <td> {{form.Predicted_HawkScore_Wk15}} </td>
+                <td> {{form.Predicted_OppScore_Wk15}}</td>
+            </tr>
+            <tr>
+                <td> {{season.Title.16}}</td>
+                <td> {{form.Predicted_HawkScore_Wk16}} </td>
+                <td> {{form.Predicted_OppScore_Wk16}}</td>
+            </tr>
+            <tr>
+                <td> {{season.Title.17}}</td>
+                <td> {{form.Predicted_HawkScore_Wk17}} </td>
+                <td> {{form.Predicted_OppScore_Wk17}}</td>
+            </tr>
+            <tr>
+                <td>Enter</td>
+                <td> Name </td>
+                <td> {{form.name}}</td>
+            </tr>
+        </table>
+        <input type="submit">
+    </form>
+{% else %}
+  <p>You are not logged in</p>
+  <a href="{% url 'login' %}">Log In</a>
+{% endif %}
 {% endblock %}

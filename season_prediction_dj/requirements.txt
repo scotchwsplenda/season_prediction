@@ -1,2 +1,2 @@
 django_tables2
-django-pandas
+django-pandas   

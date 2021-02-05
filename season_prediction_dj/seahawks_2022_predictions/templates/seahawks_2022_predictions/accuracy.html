@@ -4,6 +4,9 @@
 
 {% block content %}
     {% csrf_token %}
+    <head>
+    Were your predictions accurate, if so how many points off from the spread were you
+    </head>
     {{df_accurate_wl|safe}}
 
     <head>
