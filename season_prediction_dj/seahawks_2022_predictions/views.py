@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from .forms import prediction_form
 from .hawksscore import get_df_panda
+from django.contrib.auth.models import User
 
 import pandas as pd
 import sqlite3
@@ -8,7 +9,7 @@ import numpy as np
 # Create your views here.
 
 def hawks_predictions_form(request):
-    form = prediction_form()
+    form = prediction_form(initial={'name': User.username})
 
     season2 = get_df_panda()
 
@@ -18,7 +19,7 @@ def hawks_predictions_form(request):
         if form.is_valid():
             print(request.POST)
             form.save()
-            return redirect('/scores')
+            return redirect('/accuracy')
 
     return render(request, "seahawks_2022_predictions/form.html", {'form': form, 'season': season2})
 

@@ -1,5 +1,7 @@
 from django.db import models
-# from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
+from django.contrib.auth.models import User
+from django.conf import settings
 # from django.db.models.fields import related
 
 
@@ -9,8 +11,10 @@ from django.db import models
 # install SQLITE Explorer extension
 
 class prediction_table(models.Model):
-    # author= models.ForeignKey(User, on_delete=models.CASCADE)
-    name = models.CharField(max_length=99, default='NoName')
+    # username= models.ForeignKey(User, to_field=User.username, on_delete=models.CASCADE)
+    # name = models.ForeignKey(get_user_model(), to_field=User.username, on_delete=models.CASCADE, null=True)
+    # author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    name = models.CharField(max_length=128)
     Predicted_HawkScore_Wk1= models.PositiveIntegerField(default=0)
     Predicted_OppScore_Wk1= models.PositiveIntegerField(default=0)
     Predicted_HawkScore_Wk2= models.PositiveIntegerField(default=0)
