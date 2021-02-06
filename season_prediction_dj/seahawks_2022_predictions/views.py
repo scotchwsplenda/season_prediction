@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from .forms import prediction_form
 from .hawksscore import get_df_panda
-from django.contrib.auth.models import User
+from datetime import datetime
 
 import pandas as pd
 import sqlite3
@@ -9,18 +9,19 @@ import numpy as np
 # Create your views here.
 
 def hawks_predictions_form(request):
-    form = prediction_form(initial={'name': User.username})
-
     season2 = get_df_panda()
-
     if request.method == "POST":
-        form = prediction_form(request.POST)
+        form = prediction_form(request.POST, initial = {'Submitted_Date': datetime.now()})
         print(form)
         if form.is_valid():
+            instance = form.save(commit=False)
+            instance.author = request.user
+            instance.Submitted_Date = datetime.now()
             print(request.POST)
-            form.save()
-            return redirect('/accuracy')
-
+            instance.save()
+            return redirect('/')
+    else:
+        form = prediction_form()
     return render(request, "seahawks_2022_predictions/form.html", {'form': form, 'season': season2})
 
 def hawks_scores_view(request):
@@ -31,11 +32,11 @@ def hawks_scores_view(request):
 #  sqlite3.connect must have '../' before db file in order to navigate up one directory when running in terminal, but NOT for view in browser
 def accurate_wl(request):
     # table for predicted spread
-    df_predictions = pd.read_sql('SELECT id, name, Predicted_HawkScore_Wk1 -  Predicted_OppScore_Wk1 as Predicted_Wk1_Spred, Predicted_HawkScore_Wk2 -  Predicted_OppScore_Wk2 as Predicted_Wk2_Spred, Predicted_HawkScore_Wk3 -  Predicted_OppScore_Wk3 as Predicted_Wk3_Spred, Predicted_HawkScore_Wk4 -  Predicted_OppScore_Wk4 as Predicted_Wk4_Spred, Predicted_HawkScore_Wk5 -  Predicted_OppScore_Wk5 as Predicted_Wk5_Spred, Predicted_HawkScore_Wk6 -  Predicted_OppScore_Wk6 as Predicted_Wk6_Spred, Predicted_HawkScore_Wk7 -  Predicted_OppScore_Wk7 as Predicted_Wk7_Spred, Predicted_HawkScore_Wk8 -  Predicted_OppScore_Wk8 as Predicted_Wk8_Spred, Predicted_HawkScore_Wk9 -  Predicted_OppScore_Wk9 as Predicted_Wk9_Spred, Predicted_HawkScore_Wk10 - Predicted_OppScore_Wk10 as Predicted_Wk10_Spred, Predicted_HawkScore_Wk11 - Predicted_OppScore_Wk11 as Predicted_Wk11_Spred, Predicted_HawkScore_Wk12 - Predicted_OppScore_Wk12 as Predicted_Wk12_Spred, Predicted_HawkScore_Wk13 - Predicted_OppScore_Wk13 as Predicted_Wk13_Spred, Predicted_HawkScore_Wk14 - Predicted_OppScore_Wk14 as Predicted_Wk14_Spred, Predicted_HawkScore_Wk15 - Predicted_OppScore_Wk15 as Predicted_Wk15_Spred, Predicted_HawkScore_Wk16 - Predicted_OppScore_Wk16 as Predicted_Wk16_Spred, Predicted_HawkScore_Wk17 - Predicted_OppScore_Wk17 as Predicted_Wk17_Spred FROM seahawks_2022_predictions_prediction_table;', sqlite3.connect('db.sqlite3'))
+    df_predictions = pd.read_sql('SELECT * FROM vPredicted_Score_Dif', sqlite3.connect('db.sqlite3'))
     funky = get_df_panda()
     # table for difference between predicted and actual spread
     df_accurate_wl = pd.DataFrame()
-    df_accurate_wl['Name'] = df_predictions['name']
+    df_accurate_wl['Name'] = df_predictions['username']
     df_accurate_wl['WEEK1'] = np.where(
         ((df_predictions['Predicted_Wk1_Spred'] * funky['Differenchy'][0]) > 0), # correctly predicted W/L 
          (df_predictions['Predicted_Wk1_Spred'] - funky['Differenchy'][0]).abs(),'WRONG') # dif between actual and predicted, (if W/L wrong -1)
@@ -51,5 +52,41 @@ def accurate_wl(request):
     df_accurate_wl['WEEK5'] = np.where(
         ((df_predictions['Predicted_Wk5_Spred'] * funky['Differenchy'][4]) > 0), 
          (df_predictions['Predicted_Wk5_Spred'] - funky['Differenchy'][4]).abs(),'WRONG') 
+    df_accurate_wl['WEEK6'] = np.where(
+        ((df_predictions['Predicted_Wk6_Spred'] * funky['Differenchy'][5]) > 0), 
+         (df_predictions['Predicted_Wk6_Spred'] - funky['Differenchy'][5]).abs(),'WRONG') 
+    df_accurate_wl['WEEK7'] = np.where(
+        ((df_predictions['Predicted_Wk7_Spred'] * funky['Differenchy'][6]) > 0), 
+         (df_predictions['Predicted_Wk7_Spred'] - funky['Differenchy'][6]).abs(),'WRONG') 
+    df_accurate_wl['WEEK8'] = np.where(
+        ((df_predictions['Predicted_Wk8_Spred'] * funky['Differenchy'][7]) > 0),
+         (df_predictions['Predicted_Wk8_Spred'] - funky['Differenchy'][7]).abs(),'WRONG') 
+    df_accurate_wl['WEEK9'] = np.where(
+        ((df_predictions['Predicted_Wk9_Spred'] * funky['Differenchy'][8]) > 0), 
+         (df_predictions['Predicted_Wk9_Spred'] - funky['Differenchy'][8]).abs(),'WRONG') 
+    df_accurate_wl['WEEK10'] = np.where(
+        ((df_predictions['Predicted_Wk10_Spred'] * funky['Differenchy'][9]) > 0), 
+         (df_predictions['Predicted_Wk10_Spred'] - funky['Differenchy'][9]).abs(),'WRONG') 
+    df_accurate_wl['WEEK11'] = np.where(
+        ((df_predictions['Predicted_Wk11_Spred'] * funky['Differenchy'][10]) > 0), 
+         (df_predictions['Predicted_Wk11_Spred'] - funky['Differenchy'][10]).abs(),'WRONG') 
+    df_accurate_wl['WEEK12'] = np.where(
+        ((df_predictions['Predicted_Wk12_Spred'] * funky['Differenchy'][11]) > 0),
+         (df_predictions['Predicted_Wk12_Spred'] - funky['Differenchy'][11]).abs(),'WRONG') 
+    df_accurate_wl['WEEK13'] = np.where(
+        ((df_predictions['Predicted_Wk13_Spred'] * funky['Differenchy'][12]) > 0), 
+         (df_predictions['Predicted_Wk13_Spred'] - funky['Differenchy'][12]).abs(),'WRONG') 
+    df_accurate_wl['WEEK14'] = np.where(
+        ((df_predictions['Predicted_Wk14_Spred'] * funky['Differenchy'][13]) > 0), 
+         (df_predictions['Predicted_Wk14_Spred'] - funky['Differenchy'][13]).abs(),'WRONG') 
+    df_accurate_wl['WEEK15'] = np.where(
+        ((df_predictions['Predicted_Wk15_Spred'] * funky['Differenchy'][14]) > 0), 
+         (df_predictions['Predicted_Wk15_Spred'] - funky['Differenchy'][14]).abs(),'WRONG') 
+    df_accurate_wl['WEEK16'] = np.where(
+        ((df_predictions['Predicted_Wk16_Spred'] * funky['Differenchy'][15]) > 0),
+         (df_predictions['Predicted_Wk16_Spred'] - funky['Differenchy'][15]).abs(),'WRONG') 
+    df_accurate_wl['WEEK17'] = np.where(
+        ((df_predictions['Predicted_Wk17_Spred'] * funky['Differenchy'][16]) > 0), 
+         (df_predictions['Predicted_Wk17_Spred'] - funky['Differenchy'][16]).abs(),'WRONG')
     return render(request, "seahawks_2022_predictions/accuracy.html", {'df_accurate_wl': df_accurate_wl.to_html(), 'df_predictions': df_predictions.to_html() })
 

@@ -6,3 +6,4 @@ class prediction_form(ModelForm):
     class Meta:
         model = prediction_table
         fields = '__all__'
+        exclude = ('author',)

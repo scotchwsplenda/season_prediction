@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import User
 from django.conf import settings
+from datetime import datetime
 # from django.db.models.fields import related
 
 
@@ -11,10 +12,10 @@ from django.conf import settings
 # install SQLITE Explorer extension
 
 class prediction_table(models.Model):
-    # username= models.ForeignKey(User, to_field=User.username, on_delete=models.CASCADE)
+    author= models.ForeignKey(User, on_delete=models.CASCADE)
     # name = models.ForeignKey(get_user_model(), to_field=User.username, on_delete=models.CASCADE, null=True)
-    # author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    name = models.CharField(max_length=128)
+    # author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, default=1)
+    # name = models.CharField(max_length=128)
     Predicted_HawkScore_Wk1= models.PositiveIntegerField(default=0)
     Predicted_OppScore_Wk1= models.PositiveIntegerField(default=0)
     Predicted_HawkScore_Wk2= models.PositiveIntegerField(default=0)
@@ -49,5 +50,6 @@ class prediction_table(models.Model):
     Predicted_OppScore_Wk16= models.PositiveIntegerField(default=0)
     Predicted_HawkScore_Wk17= models.PositiveIntegerField(default=0)
     Predicted_OppScore_Wk17= models.PositiveIntegerField(default=0)
+    Submitted_Date = models.DateTimeField(blank=True, null=True)
     def __str__(self):
-        return self.name
+        return self.authors
