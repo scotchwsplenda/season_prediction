@@ -4,7 +4,7 @@ import pandas as pd
 import sqlite3
 import numpy as np
 from pandas.core.frame import DataFrame
-from seahawks_2022_predictions.models import prediction_table
+# from .models import prediction_table
 from django_pandas.io import read_frame
 
 # .season_prediction_dj.seahawks_2022_predictions

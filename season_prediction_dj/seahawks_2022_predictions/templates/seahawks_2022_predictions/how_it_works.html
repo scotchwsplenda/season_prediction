@@ -1,0 +1,51 @@
+{% extends "seahawks_2022_predictions/base.html" %}
+
+{% block title %}What is this? What does it mean? How does it work? {% endblock %}
+
+{% block content %}
+
+        {% csrf_token %}
+
+        <head>
+        You are trying to accurately guess the score of upcoming Seahawk games. You are graded based solely on how closely you guess the point differential,
+        not at all on how close to total points scored (over/under) you are. 
+        
+        For instance if you guess the Seahawks will win by a score of 45 to 42 and they win 3 to 0 you
+        will recieve a higher grade than if you guessed they would win by a score of 47 to 40. Is this dumb? I don't know, ask yourself; is football dumb? Is life
+        dumb? 
+        
+        Yes. It is. So what. Below is a breakout of how exactly your point differential or 'spread' accuracy grades out.
+        </head>
+        <table class="table" border="3">
+        
+            <tr>
+                <th> Spread </th>
+                <th> Grade </th>
+            </tr>
+            <tr>
+                <td> 0</td>
+                <td> 100 </td>
+            </tr>
+            <tr>
+                <td>&lt; 3.5 </td>
+                <td> 95 </td>
+            </tr>
+            <tr>
+                <td>&lt; 7.5 </td>
+                <td> 90 </td>
+            </tr>
+            <tr>
+                <td>&lt; 10.5 </td>
+                <td> 85 </td>
+            </tr>
+            <tr>
+                <td>&lt; 14.5 </td>
+                <td> 80 </td>
+            </tr>
+            <tr>
+                <td>&lt; 21.5 </td>
+                <td> 75 </td>
+            </tr>
+        </table>
+
+{% endblock %}
