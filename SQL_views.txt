@@ -22,3 +22,5 @@ SELECT
 FROM seahawks_2022_predictions_prediction_table AS a
 join auth_user b
 on a.author_id = b.id;
+
+
