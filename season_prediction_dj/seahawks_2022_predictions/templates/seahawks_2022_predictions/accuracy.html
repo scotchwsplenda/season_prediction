@@ -6,19 +6,18 @@
     {% csrf_token %}
 
     <head>
-    Raw predictions
+    Actual spread vs. your predictions
     </head>
-    {{df_predictions|safe}}
-
-    <head>
-    Were your predictions accurate, if so how many points off from the spread were you
-    </head>
-    {{df_accurate_wl|safe}}
+    {{bigdata|safe}}
 
     <head>
     How your predictions grade
     </head>
     {{df_predictions_accuracy|safe}}
 
+    <head>
+    Did you get your W and Ls correct? 'X' Indicates you were a wrong idiot
+    </head>
+    {{df_accurate_wl|safe}}
 
 {% endblock %}

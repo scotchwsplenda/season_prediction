@@ -94,6 +94,16 @@ def accurate_wl(request):
     df_predictions_accuracy = pd.DataFrame()
     df_predictions_accuracy['name'] = df_accurate_wl.iloc[:,0]
     df_predictions_accuracy['WEEK1'] = pd.cut(df_accurate_wl_funk['WEEK1'],bins = cut_conditions, labels = cut_scores)
-    return render(request, "seahawks_2022_predictions/accuracy.html", {'df_accurate_wl': df_accurate_wl.to_html(), 'df_predictions': df_predictions.to_html(), 'df_predictions_accuracy' : df_predictions_accuracy.to_html() })
+    # merged_spread
+    dd = get_df_panda().reset_index(drop = True)
+    dd = dd.loc[:16,['Title','Differenchy']]
+    df_predictions = pd.read_sql('SELECT * FROM vPredicted_Score_Dif', sqlite3.connect('db.sqlite3'))
+    df_predictions = df_predictions.T
+    # make columns equal
+    new_header = df_predictions.iloc[0] #grab the first row for the header
+    df_predictions = df_predictions[1:] #take the data less the header row
+    df_predictions.columns = new_header #set the header row as the df header
+    df_predictions = df_predictions.reset_index(drop = True)
+    bigdata = pd.merge(dd, df_predictions, left_index=True, right_index=True)
 
-
+    return render(request, "seahawks_2022_predictions/accuracy.html", {'df_accurate_wl': df_accurate_wl.fillna('X').to_html(), 'df_predictions': df_predictions.to_html(), 'df_predictions_accuracy' : df_predictions_accuracy.to_html(), 'bigdata' : bigdata.to_html })

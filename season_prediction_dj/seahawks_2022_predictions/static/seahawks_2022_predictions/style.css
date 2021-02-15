@@ -1,5 +1,7 @@
 body {
-    background: transparent url("images/beastquake2.jpg") no-repeat;    
-    background-position: right 20px bottom ; 
+    background: blanchedalmond url("images/beastquake2.jpg");
+    background-repeat: no-repeat;
+    background-position: top right;
+    background-blend-mode: hard-light;    
     background-size: 300px 150px;
 }
