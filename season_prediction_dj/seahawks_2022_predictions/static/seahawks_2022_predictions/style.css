@@ -1,7 +1,7 @@
 body {
     background: blanchedalmond url("images/beastquake2.jpg");
     background-repeat: no-repeat;
-    background-position: top right;
+    background-position: top 10px right 10px;
     background-blend-mode: hard-light;    
     background-size: 300px 150px;
 }
