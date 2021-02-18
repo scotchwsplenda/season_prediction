@@ -17,43 +17,19 @@ df_predictions = df_predictions.reset_index(drop = True)
 bigdata = pd.merge(dd, df_predictions, left_index=True, right_index=True)
 bigdata = bigdata.fillna(0)
 bigdata['Differenchy'] = bigdata['Differenchy'].astype(int)
-# print(bigdata)
 
 
-# print(np.subtract(bigdata['Differenchy'], bigdata['Ken']))
 # https://stackoverflow.com/questions/26333005/numpy-subtract-every-row-of-matrix-by-vector/26333184
 v = bigdata['Differenchy'][:, np.newaxis]
-# print(type(v))
 
-# for x in v:
-#     print(type(x))
-
-# print(bigdata.iloc[:,1:])
-# print(bigdata.iloc[:,1:]-v)
-c = bigdata['Differenchy']
-for x in c:
-    print(x)
-# print(type(c))
-
-dumn = []
+dumb=[]
 for index, row in bigdata.iterrows():
-    dumn.append(np.where((row[1] * row[2:]) > 0, (row[1] - row[2:]).abs(), None))
-print(dumn)
+    zz = np.where((row[1] * row[2:]) > 0, (row[1] - row[2:]).abs(), None).tolist()
+    zz.insert(0,row[1])
+    zz.insert(0,row[0])
+    dumb.append(zz)
+    # print(zz)
 
-
-    # print(type(index))
-    # print(index)
-    # print('~~~~~~')
-
-    # print(type(row))
-    # print(row)
-    # print('------')
-
-
-    # print(np.where((column * v) > 0, (column - v).abs(), None))
-
-'''
-df_accurate_wl['WEEK1'] = np.where(
-    ((df_predictions['Pred_Wk1_Spred'] * funky['Differenchy'][0]) > 0), # correctly predicted W/L 
-        (df_predictions['Pred_Wk1_Spred'] - funky['Differenchy'][0]).abs(),None) # dif between actual and predicted, (if W/L wrong -1)
-'''
+dumb = np.array(dumb)
+df = pd.DataFrame(dumb, columns=bigdata.columns.to_list())
+print(df)
