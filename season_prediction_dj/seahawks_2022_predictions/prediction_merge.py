@@ -28,8 +28,25 @@ for index, row in bigdata.iterrows():
     zz.insert(0,row[1])
     zz.insert(0,row[0])
     dumb.append(zz)
-    # print(zz)
-
+    print(zz)
 dumb = np.array(dumb)
 df = pd.DataFrame(dumb, columns=bigdata.columns.to_list())
-print(df)
+
+# def condformat(row):
+#     color = 'background-color: {}'.format('green' if row.value >0 else 'red')
+#     return (color, color)
+
+def color_negative_red(val):
+    """
+    Takes a scalar and returns a string with
+    the css property `'color: red'` for negative
+    strings, black otherwise.
+    """
+    color = 'red' if val < 0 else 'green'
+    return 'color: %s' % color
+
+s = df.style.apply(color_negative_red, axis=0)
+
+
+print(s)
+

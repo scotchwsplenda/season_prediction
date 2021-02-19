@@ -1,7 +1,9 @@
--- SQLite
---CREATE VIEW vPredicted_Score_Dif as
+CREATE VIEW vPredicted_Score_Dif as
 SELECT 
- b.username
+ b.username || '_v' ||
+ ROW_NUMBER () OVER ( 
+        PARTITION BY username ORDER BY  Submitted_Date 
+    ) user_prediction
 , a.Predicted_HawkScore_Wk1 -  a.Predicted_OppScore_Wk1 as Predicted_Wk1_Score_Dif
 , a.Predicted_HawkScore_Wk2 -  a.Predicted_OppScore_Wk2 as Predicted_Wk2_Score_Dif
 , a.Predicted_HawkScore_Wk3 -  a.Predicted_OppScore_Wk3 as Predicted_Wk3_Score_Dif
@@ -23,4 +25,4 @@ FROM seahawks_2022_predictions_prediction_table AS a
 join auth_user b
 on a.author_id = b.id;
 
-
+--drop  VIEW vPredicted_Score_Dif
