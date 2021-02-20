@@ -31,14 +31,15 @@ def hawks_scores_view(request):
 # https://stackoverflow.com/questions/39109045/numpy-where-with-multiple-conditions -> answer #2
 #  sqlite3.connect must have '../' before db file in order to navigate up one directory when running in terminal, but NOT for view in browser
 
-def color_negative_red(val):
-    """
-    Takes a scalar and returns a string with
-    the css property `'color: red'` for negative
-    strings, black otherwise.
-    """
-    color = 'red' if val < 0 else 'green'
-    return 'color: %s' % color
+def highlight_max(cell): 
+    if type(cell) == str:
+        return 'background: white; color: black' #; border: 1px solid black
+    if type(cell) != str and cell < 0 : 
+        return 'background: blue; color:black'
+    else: 
+        return 'background: green; color: white'
+# Using apply method of style  
+# attribute of Pandas DataFrame 
 
 def accurate_wl(request):
     # merge actual and predited spreads
@@ -54,7 +55,7 @@ def accurate_wl(request):
     bigdata = bigdata.fillna(0)
     bigdata['Differenchy'] = bigdata['Differenchy'].astype(int)
     bigdata = bigdata.rename(columns={'Differenchy' : 'Actual Spread'})
-    bigdatahtml = bigdata.to_html(classes="table table-striped table-bordered border-primary", index=False)
+    bigdatahtml = bigdata.to_html(classes="table table-striped table-bordered table-hover", index=False)
     # show accuracy of predictions
     dumb=[]
     for index, row in bigdata.iterrows():
@@ -64,9 +65,7 @@ def accurate_wl(request):
         dumb.append(zz)
     dumb = np.array(dumb)
     df_accurate_wl = pd.DataFrame(dumb, columns=bigdata.columns.to_list()).fillna('X')
-    # df_accurate_wl.iloc[2:] = df_accurate_wl.iloc[2:].applymap(lambda x: f'<font color="red">{x}</font>' if x<0 else f'<font color="green">{x}</font>')
-    df_accurate_wlhtml = df_accurate_wl.to_html(classes="table table-striped table-bordered border-primary", index=False, formatters={'numbers':"{0:+g}"})
-
+    df_accurate_wlhtml = df_accurate_wl.style.applymap(highlight_max).hide_index().set_table_attributes('border="1" class="dataframe table table-hover table-bordered table-striped"').render()
     # # prediction grade
     # df_accurate_wl_funk = df_accurate_wl
     # cut_conditions = [-1, 0, 3.5, 7.5, 10.5, 14.5, 21.5,22]
