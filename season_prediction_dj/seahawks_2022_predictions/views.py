@@ -35,7 +35,7 @@ def highlight_max(cell):
     if type(cell) == str:
         return 'background: white; color: black' #; border: 1px solid black
     if type(cell) != str and cell < 0 : 
-        return 'background: blue; color:black'
+        return 'background: blue; color:red'
     else: 
         return 'background: green; color: white'
 # Using apply method of style  
