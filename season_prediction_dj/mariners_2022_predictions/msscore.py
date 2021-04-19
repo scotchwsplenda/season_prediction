@@ -13,13 +13,21 @@ table = pd.read_html(url)
 print(type(table))
 # print(table[0])
 table = table[0] # for some fucking reason you have to say its the first thing ([0])
-table = table.iloc[:,0:2]
+print(table.columns)
+table = table.iloc[:,:5]
 
 table['Date'] = table['Date'].replace([', 2021'], '', regex=True) # the regex is what makes it read only part of the string
-print(table['OPP'].str[:2])
+# print(table['OPP'].str[:2])
 table['WHERE'] = np.where(table['OPP'].str[:2]=='vs',"HOME",'AWAY')
+table["OPP"] = table["OPP"].str.split(" ",1).str[1]
 # https://datatofish.com/left-right-mid-pandas/
 print(table[:9])
+
+# group and order by size
+dumb  = table.groupby(['OPP']).size()
+print(dumb.sort_values(ascending=False))
+
+
 # def get_df_panda():
 #     url = 'https://www.cbssports.com/mlb/teams/SEA/seattle-mariners/schedule/regular/'
 #     table = pd.read_html(url, match='Game Results Table')
